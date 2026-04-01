@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="am">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Addis Bingo - 600</title>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <style>
+        body { font-family: sans-serif; background-color: #9b7dbd; color: white; margin: 0; padding: 10px; text-align: center; }
+        .header { display: flex; justify-content: space-around; background: #fff; color: #4a148c; padding: 10px; border-radius: 20px; font-size: 12px; font-weight: bold; margin-bottom: 10px; }
+        .jackpot-container { background: #fff; border-radius: 10px; padding: 5px; margin-bottom: 15px; color: #000; }
+        .jackpot-bar { background: #eee; border-radius: 5px; height: 10px; width: 100%; position: relative; }
+        .jackpot-fill { background: gold; height: 100%; width: 97.5%; border-radius: 5px; }
+        .grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 5px; max-height: 400px; overflow-y: auto; background: rgba(255,255,255,0.2); padding: 10px; border-radius: 15px; }
+        .num { background: #eee; color: #333; padding: 10px; border-radius: 8px; font-weight: bold; cursor: pointer; }
+        .num.selected { background: #2e7d32; color: white; }
+        .footer-btns { margin-top: 15px; display: flex; justify-content: space-around; }
+        button { padding: 12px 25px; border-radius: 25px; border: none; font-weight: bold; cursor: pointer; }
+        .refresh { background: #42a5f5; color: white; }
+        .start { background: #ff7043; color: white; }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <div>Wallet<br><span id="wallet">0.46</span></div>
+        <div>Bonus<br><span>5</span></div>
+        <div>Active Game<br><span>2</span></div>
+        <div>Stake<br><span>10</span></div>
+    </div>
+
+    <div class="jackpot-container">
+        <div style="display:flex; justify-content: space-between; font-size: 10px; font-weight: bold;">
+            <span>JACKPOT</span> <span>975.6 / 1000</span>
+        </div>
+        <div class="jackpot-bar"><div class="jackpot-fill"></div></div>
+    </div>
+
+    <div class="grid" id="bingoGrid">
+        </div>
+
+    <div class="footer-btns">
+        <button class="refresh" onclick="location.reload()">Refresh</button>
+        <button class="start" onclick="startGame()">Start Game</button>
+    </div>
+
+    <script>
+        let tg = window.Telegram.WebApp;
+        tg.expand(); // ገጹን ሙሉ እንዲሆን ማድረግ
+
+        const grid = document.getElementById('bingoGrid');
+        for (let i = 1; i <= 600; i++) {
+            let div = document.createElement('div');
+            div.className = 'num';
+            div.innerText = i;
+            div.onclick = function() { this.classList.toggle('selected'); };
+            grid.appendChild(div);
+        }
+
+        function startGame() {
+            tg.sendData("Game Started with selected numbers");
+            tg.close();
+        }
+    </script>
+</body>
+</html>
